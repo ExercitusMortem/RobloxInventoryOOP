@@ -10,6 +10,16 @@ Item.new = function(item_id : string, pos : Vector3)
 	
 	local OBJECT = Object.new(pos)
 	local INTERACTABLE = Interactable.new(OBJECT)
+	
+	local function pickup()
+		OBJECT:SetSpawned(false)
+	end
+	
+	local function drop()
+		OBJECT:SetSpawned(true)
+	end
+	
+	INTERACTABLE:SetCallback(pickup)
 	return self
 end
 
