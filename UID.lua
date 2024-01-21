@@ -1,6 +1,5 @@
-local index = 0
-
+local i = 0
 return function()
-	index+=1
-	return index
+	i+=1
+	return i
 end
