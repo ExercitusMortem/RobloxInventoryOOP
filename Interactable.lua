@@ -1,31 +1,16 @@
 local Interactable = {}
 
-local function generatePart(pos)
-	local part = Instance.new("Part")
-	part.Anchored = true
-	part.Size = Vector3.new(1,1,1)
-	part.Position = pos or Vector3.new(0,0,0)
-	
-	local proximityPrompt = Instance.new("ProximityPrompt",part)
-	proximityPrompt.RequiresLineOfSight = false
-	
-	return part, proximityPrompt
-end
-
-Interactable.new = function(callback, pos)
+Interactable.new = function(itemInstance, callback)
 	local self = {}
 	
-	self.part, self.proximityPrompt = generatePart(pos)
+	local proxPrompt = Instance.new('ProximityPrompt')
+	proxPrompt.RequiresLineOfSight = false
 	
-	local function fireCallback(...)
-		callback(...)
-	end
+	proxPrompt.Parent = itemInstance.Model
 	
-	self.proximityPrompt.Triggered:Connect(function(playerWhoClicked)
-		fireCallback(self, playerWhoClicked)
+	proxPrompt.Triggered:Connect(function(player)
+		callback(itemInstance, player)
 	end)
-	
-	return self
 end
 
 return Interactable
